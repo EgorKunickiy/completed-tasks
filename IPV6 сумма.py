@@ -5,11 +5,7 @@ def process_the_string(ipv6_str):
     number_blocks_10 = []
 
     for block in number_blocks_16:
-        result = 0
-        for number in block:
-            result += int(number, 16)
-        result = str(result)
-        number_blocks_10.append(result)
+        number_blocks_10.append(str(sum(map(lambda x: int(x, 16), block))))
 
     return ''.join(number_blocks_10)
 
