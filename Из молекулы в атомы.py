@@ -1,6 +1,6 @@
 from collections import deque, defaultdict
 
-def sum_dict(dict1, dict2):
+def sum_dict(dict1: dict, dict2: dict) -> dict:
     result = defaultdict(int)
     new_dict = defaultdict(int)
     new_dict = dict1.copy()
@@ -9,7 +9,7 @@ def sum_dict(dict1, dict2):
         result[i] = dict1[i] + dict2[i]
     return result
 
-def nesting(molecule):
+def nesting(molecule: str) -> list:
     parentheses = {'(': ')', '[': ']', '{': '}'}
     stack = deque()
     start = -1
