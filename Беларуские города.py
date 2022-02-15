@@ -1,23 +1,10 @@
-from enum import Enum
-import collections
-
-class Cities (Enum):
-    Minsk = 'минск'
-    Vitebsk = 'витебск'
-    Mogilev = 'могилев'
-    Gomel = 'гомель'
-    Grodno = 'гродно'
-    Brest = 'брест'
-
 def find_city (str):
-    list_cities = [Cities.Brest, Cities.Minsk, Cities.Gomel, Cities.Grodno, Cities.Mogilev, Cities.Vitebsk]
     list_word = str.split()
     result = []
-
+    list_cities = {'минск', 'витебск', 'могилев', 'гродно', 'гомель', 'брест'}
     for word in list_word:
-        for city in list_cities:
-            if word.lower() == city.value:
-                result.append(word)
+        if word.lower() in list_cities:
+            result.append(word)
 
     return result
 
