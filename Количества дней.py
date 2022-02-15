@@ -23,8 +23,6 @@ def calculate_day (weekday):
 
     elif weekday == Week.Sunday.value[0]:
         return 6
-        # не знал как по-другому посчитать или обозначить кол-во от воскресенья
-        # поэтому просто обозначил константу
 
     for day in list_day:
         if day.value[0] == weekday:
