@@ -1,5 +1,6 @@
 import itertools
 
+
 def sum_v_and_p(combination: list, dict_elem: dict) -> list:
     sum_v = 0
     sum_p = 0
@@ -9,7 +10,8 @@ def sum_v_and_p(combination: list, dict_elem: dict) -> list:
         sum_v += list_values[1]
     return [sum_p, sum_v]
 
-def combinations_bag ( p: int, v: int, dict_elem: dict):
+
+def combinations_bag(p: int, v: int, dict_elem: dict):
     result = []
     max_price = 0
     for i in range(1, len(dict_elem)):
@@ -25,8 +27,9 @@ def combinations_bag ( p: int, v: int, dict_elem: dict):
 
     return result
 
+
 if __name__ == "__main__":
-    #first value is price, second is volume
+    # first value is price, second is volume
     el = {
         1: [6, 4],
         2: [3, 6],

@@ -1,3 +1,6 @@
+from timeit import default_timer as timer
+
+
 def insertion_sort(arr: list) -> list:
     for i in range(1, len(arr)):
         j = i
@@ -5,6 +8,7 @@ def insertion_sort(arr: list) -> list:
             arr[j - 1], arr[j] = arr[j], arr[j-1]
             j -= 1
     return arr
+
 
 def heap_sort(arr: list) -> list:
 
@@ -24,11 +28,13 @@ def heap_sort(arr: list) -> list:
         arr[i], arr[0] = arr[0], arr[i]
     return arr
 
+
 def selection_sort(arr: list) -> list:
     new_arr = []
     for i in range(len(arr)):
         new_arr.append(arr.pop(arr.index(min(arr))))
     return new_arr
+
 
 def fast_sort(arr: list) -> list:
     if len(arr) < 2:
@@ -44,8 +50,12 @@ def fast_sort(arr: list) -> list:
                 arr2.append(i)
         return fast_sort(arr1) + [sr] + fast_sort(arr2)
 
+
 if __name__ == "__main__":
-    print(selection_sort([4, 3, 5, 6, 1, 4]))
-    print(fast_sort([2, 4, 7, 6, 34, 5, 42, 555]))
-    print(heap_sort([2, 4, 7, 6, 34, 5, 42, 555]))
-    print(insertion_sort([4, 3, 5, 6, 1, 4]))
+    array = [5, 3, -87, 23, 66, -1, 3, 0]
+    functions = [selection_sort, heap_sort, fast_sort, insertion_sort]
+    for func in functions:
+        t = timer()
+        func(array)
+        result = timer() - t
+        print(f'{func.__name__}: {result*1000}')

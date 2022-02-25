@@ -1,6 +1,7 @@
 import numpy
 import csv
 
+
 class Reader_csv():
     def read_csv(self):
         with open('tree2.csv') as File:
@@ -21,19 +22,20 @@ class Reader_csv():
                 result[int(dictionary[keys[0]])] = [int(dictionary[keys[1]])]
         return result
 
+
 class Graph:
-    def __init__(self, V, E, dictionary):
-        self.V = V
-        self.E = E
+    def __init__(self, vertexes, edges, dictionary):
+        self.vertexes = vertexes
+        self.edges = edges
         self.graph = dictionary
 
     def Bfs(self, start, end):
-        num_bfs = numpy.zeros(self.V)
+        num_bfs = numpy.zeros(self.vertexes)
         num_bfs[start - 1] = 1
         search_deque = []
         search_deque += [start]
         ine = 1
-        pr = numpy.full(self.V, -1, 'int32')
+        pr = numpy.full(self.vertexes, -1, 'int32')
         for i1 in search_deque:
             if i1 in self.graph.keys():
                 for j in self.graph[i1]:
@@ -42,15 +44,15 @@ class Graph:
                         num_bfs[j - 1] = ine
                         search_deque.append(j)
                         pr[j - 1] = i1
-        self.Way(start, end, pr)
+        self.way(start, end, pr)
 
-    def Way(self, start, end, arr):
+    def way(self, start, end, arr):
         res = [end]
         i = arr[end - 1]
         while i != start:
             res.append(i)
             i = arr[i - 1]
-            if i == -1 :
+            if i == -1:
                 print('No way')
                 return 0
         res.append(start)

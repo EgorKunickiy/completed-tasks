@@ -1,5 +1,6 @@
 import csv
 
+
 class Tree():
     def __init__(self, dict_tree: dict):
         self.tree_nodes = dict_tree
@@ -9,6 +10,8 @@ class Tree():
             return [id_node, self.tree_nodes[id_node]]
         else:
             return [id_node, '']
+
+
 class Reader_csv():
     def read_csv(self):
         with open('tree2.csv') as File:
@@ -28,6 +31,8 @@ class Reader_csv():
             else:
                 result[int(dictionary[keys[0]])] = [int(dictionary[keys[1]])]
         return result
+
+
 if __name__ == "__main__":
     tree = Tree(Reader_csv().build_dict())
     print(tree.tree_nodes)
