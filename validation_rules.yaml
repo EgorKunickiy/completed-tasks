@@ -1,0 +1,9 @@
+diff:
+  max: 20
+  min: 5
+div:
+  max: 10
+  min: 2
+sum:
+  max: 50
+  min: 5
