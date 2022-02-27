@@ -1,81 +1,36 @@
 import yaml
+from operator import *
 
 
-class SumException(Exception):
-    pass
-
-
-class DivException(Exception):
-    pass
-
-
-class DiffException(Exception):
+class ValidationException(Exception):
     pass
 
 
 def read_file():
     with open('validation_rules.yaml', 'r') as file:
         dict_rules = yaml.safe_load(file)
-
     return dict_rules
 
 
 def multi_func(first_num: int, second_num: int, validation_rules: dict):
-    try:
-        if not(validation_rules['sum']['max'] >= second_num
-               >= validation_rules['sum']['min']):
-            print(f'{second_num}', end='')
-            raise SumException
+    names_operator = list(validation_rules.keys())
+    for operator in names_operator:
+        try:
+            if not(validation_rules[operator]['max'] >= second_num
+                   >= validation_rules[operator]['min']):
+                print(f'{second_num}', end='')
+                raise ValidationException
 
-        elif not(validation_rules['sum']['max'] >= first_num
-                 >= validation_rules['sum']['min']):
-            print(f'{first_num}', end='')
-            raise SumException
-
-        else:
-            print('sum: ' + str(first_num + second_num))
-    except SumException:
-        print(f" not in range({validation_rules['sum']['min']}, "
-              f"{validation_rules['sum']['max']}) for sum")
-
-    try:
-        if not(validation_rules['div']['max'] >= second_num
-               >= validation_rules['div']['min']):
-            print(f'{second_num}', end='')
-            raise DivException
-
-        elif not(validation_rules['div']['max'] >= first_num
-                 >= validation_rules['div']['min']):
-            print(f'{first_num}', end='')
-            raise DivException
-        elif second_num == 0:
-            raise ZeroDivisionError
-        else:
-            print('div: ' + str(first_num / second_num))
-
-    except DivException:
-        print(f" not in range({validation_rules['div']['min']}, "
-              f"{validation_rules['div']['max']}) for div")
-    except ZeroDivisionError:
-        print('division by zero')
-
-    try:
-        if not(validation_rules['diff']['max'] >= second_num
-               >= validation_rules['diff']['min']):
-            print(f'{second_num}', end='')
-            raise DiffException
-
-        elif not(validation_rules['diff']['max'] >= first_num
-                 >= validation_rules['diff']['min']):
-            print(f'{first_num}', end='')
-            raise DiffException
-
-        else:
-            print('diff: ' + str(first_num - second_num))
-
-    except DiffException:
-        print(f" not in range({validation_rules['diff']['min']}, "
-              f"{validation_rules['diff']['max']}) for diff")
+            elif not(validation_rules[operator]['max'] >= first_num
+                     >= validation_rules[operator]['min']):
+                print(f'{first_num}', end='')
+                raise ValidationException
+            else:
+                print(operator + ": "
+                      + str(globals()[operator](first_num, second_num)))
+        except ValidationException:
+            print(f" not in range({validation_rules[operator]['min']},"
+                  f"{validation_rules[operator]['max']}) ")
 
 
 if __name__ == "__main__":
