@@ -19,9 +19,9 @@ class Storage:
         self.__is_appendable = True
 
     def __enter__(self):
-        if not self.__is_appendable:
-            self.unlock_()
-            print('open')
+        assert not self.__is_appendable, 'object is already open for recording'
+        self.unlock_()
+        print('open')
         return self
 
     def __exit__(self, exc_type, exc_val, exc_tb):
@@ -38,3 +38,7 @@ if __name__ == "__main__":
         print(st.show())
         st.append({3: 5, 6: 8})
         print(st.show())
+
+    storage.unlock_()
+    with storage:
+        st.append('qwer')
