@@ -30,4 +30,3 @@ def func2(*args: int):
 if __name__ == "__main__":
     func2(1, 2, 3, 445)
     func('qwer', [6, 7, 8], {2: 4})
-
