@@ -16,22 +16,19 @@ def multi_func(first_num: int, second_num: int, validation_rules: dict):
     names_operator = list(validation_rules.keys())
     for operator in names_operator:
         try:
-            if not(validation_rules[operator]['max'] >= second_num
+            result = globals()[operator](first_num, second_num)
+            if not(validation_rules[operator]['max'] >= result
                    >= validation_rules[operator]['min']):
-                print(f'{second_num}', end='')
+                print(f'{result}', end='')
                 raise ValidationException
 
-            elif not(validation_rules[operator]['max'] >= first_num
-                     >= validation_rules[operator]['min']):
-                print(f'{first_num}', end='')
-                raise ValidationException
             else:
-                print(operator + ": "
-                      + str(globals()[operator](first_num, second_num)))
+                print(operator + ": " + str(result))
+
         except ValidationException:
             print(f" not in range({validation_rules[operator]['min']},"
-                  f"{validation_rules[operator]['max']}) ")
-
+                  f"{validation_rules[operator]['max']}) for {operator}")
+    print('---------------------------------------------------')
 
 if __name__ == "__main__":
     dict_rules = read_file()
