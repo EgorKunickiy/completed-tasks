@@ -8,8 +8,8 @@ class ValidationException(Exception):
 
 def read_file():
     with open('validation_rules.yaml', 'r') as file:
-        dict_rules = yaml.safe_load(file)
-    return dict_rules
+        valid_rules = yaml.safe_load(file)
+    return valid_rules
 
 
 def multi_func(first_num: int, second_num: int, validation_rules: dict):
@@ -29,6 +29,7 @@ def multi_func(first_num: int, second_num: int, validation_rules: dict):
             print(f" not in range({validation_rules[name_oper]['min']},"
                   f"{validation_rules[name_oper]['max']}) for {name_oper}")
     print('---------------------------------------------------')
+
 
 if __name__ == "__main__":
     dict_rules = read_file()
