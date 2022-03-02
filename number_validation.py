@@ -1,5 +1,5 @@
 import yaml
-from operator import *
+import operator
 
 
 class ValidationException(Exception):
@@ -14,20 +14,20 @@ def read_file():
 
 def multi_func(first_num: int, second_num: int, validation_rules: dict):
     names_operator = list(validation_rules.keys())
-    for operator in names_operator:
+    for name_oper in names_operator:
         try:
-            result = globals()[operator](first_num, second_num)
-            if not(validation_rules[operator]['max'] >= result
-                   >= validation_rules[operator]['min']):
+            result = getattr(operator, name_oper)(first_num, second_num)
+            if not(validation_rules[name_oper]['max'] >= result
+                   >= validation_rules[name_oper]['min']):
                 print(f'{result}', end='')
                 raise ValidationException
 
             else:
-                print(operator + ": " + str(result))
+                print(name_oper + ": " + str(result))
 
         except ValidationException:
-            print(f" not in range({validation_rules[operator]['min']},"
-                  f"{validation_rules[operator]['max']}) for {operator}")
+            print(f" not in range({validation_rules[name_oper]['min']},"
+                  f"{validation_rules[name_oper]['max']}) for {name_oper}")
     print('---------------------------------------------------')
 
 if __name__ == "__main__":
