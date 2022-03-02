@@ -12,7 +12,7 @@ class Tree():
             return [id_node, '']
 
 
-class Reader_csv():
+class ReaderCSV():
     def read_csv(self):
         with open('tree2.csv') as File:
             self.result = []
@@ -34,6 +34,6 @@ class Reader_csv():
 
 
 if __name__ == "__main__":
-    tree = Tree(Reader_csv().build_dict())
+    tree = Tree(ReaderCSV().build_dict())
     print(tree.tree_nodes)
     print(tree.find_node(6))
