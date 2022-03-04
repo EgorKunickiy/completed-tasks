@@ -99,7 +99,5 @@ if __name__ == "__main__":
     ordering.describe_the_order()
     ordering.pay(10)
 
-
-
     ordering_2 = Ordering()
     ordering_2.describe_the_order()
