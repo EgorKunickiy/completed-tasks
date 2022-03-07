@@ -8,22 +8,20 @@ def find_data(string: str):
 
 
 class ReaderFASTA:
-    def __init__(self, file_name):
-        self.file_name = file_name
-        self.file = open(self.file_name, 'r')
-        self.__list_of_sequence = []
+    def __init__(self, file_name: str):
+        self.file_name: str = file_name
+        self.__list_of_sequence: list = []
+        self.__read()
 
     @property
     def get_list_of_sequence(self):
         return self.__list_of_sequence
 
-    def read_sequence(self):
-        self.__read(self.file)
-
-    def __read(self, file):
-        id_par = ''
-        description = ''
-        sequence = ''
+    def __read(self):
+        file = open(self.file_name, 'r')
+        id_par: str = ''
+        description: str = ''
+        sequence: str = ''
         for string in file:
             if '>' in string:
                 if len(id_par) != 0:
@@ -35,19 +33,14 @@ class ReaderFASTA:
             else:
                 sequence += string
         self.__list_of_sequence.append(Sequence(id_par, description, sequence))
-
-    def __enter__(self):
-        return self
-
-    def __exit__(self, exc_type, exc_val, exc_tb):
-        self.file.close()
+        file.close()
 
 
 class Sequence:
-    def __init__(self, id, description, sequence):
-        self.__id = id
-        self.__description = description
-        self.__sequence = sequence
+    def __init__(self, id: str, description: str, sequence: str):
+        self.__id: str = id
+        self.__description: str = description
+        self.__sequence: str = sequence
 
     @property
     def get_id(self):
@@ -63,8 +56,7 @@ class Sequence:
 
 
 if __name__ == "__main__":
-    with ReaderFASTA('abcd.fasta') as reader:
-        reader.read_sequence()
+    reader = ReaderFASTA('abcd.fasta')
 
     for seq in reader.get_list_of_sequence:
         print(seq.get_id)
