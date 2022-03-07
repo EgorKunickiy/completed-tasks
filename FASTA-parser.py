@@ -54,11 +54,14 @@ class Sequence:
     def get_description(self):
         return self.__description
 
+    def __str__(self):
+        return f'ID: {seq.get_id}' + '\n' \
+               f'DESCRIPTION: {seq.get_description}' + '\n' \
+               f'SEQUENCE: {seq.get_sequence}'
+
 
 if __name__ == "__main__":
     reader = ReaderFASTA('abcd.fasta')
 
     for seq in reader.get_list_of_sequence:
-        print(seq.get_id)
-        print(seq.get_description)
-        print(seq.get_sequence)
+        print(seq)
