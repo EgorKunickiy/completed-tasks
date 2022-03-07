@@ -1,13 +1,9 @@
-class ExceptionOfOrder(Exception):
-    pass
-
-
 class Dish:
     def __init__(self, quantity: int, name: str, price: float, mass: int):
-        self.__quantity = quantity
-        self.__name = name
-        self.__price = price
-        self.__mass = mass
+        self.__quantity: int = quantity
+        self.__name: str = name
+        self.__price: float = price
+        self.__mass: int = mass
 
     @property
     def get_quantity(self):
@@ -28,11 +24,12 @@ class Dish:
 
 class Ordering:
     def __init__(self):
-        self.__list_of_dishes = None
-        self.__quantity_of_dish = 0
-        self.__price = 0
-        self.__mass = 0
-        self.__cost = 0
+        self.__list_of_dishes: list = None
+        self.__quantity_of_dish: int = 0
+        self.__price: int = 0
+        self.__mass: int = 0
+        self.__cost: int = 0
+
     @property
     def get_quantity(self):
         return self.__quantity_of_dish
@@ -54,18 +51,14 @@ class Ordering:
         return self.__cost
 
     def describe_the_order(self):
-        try:
-            if self.__list_of_dishes is None:
-                raise ExceptionOfOrder
-            else:
-                print(f'list of dish: {list(map(lambda x: x.get_name,self.get_list_of_dish))}', sep=', ')
-                print(f'total quantity: {self.get_quantity}' + '\n'
-                      f'total mass: {self.get_mass}' + '\n'
-                      f'total price: {self.get_price}' + '\n'
-                      f'total cost: {self.get_cost}')
-
-        except ExceptionOfOrder:
-            print(f'Order is empty')
+        if self.__list_of_dishes is None:
+            print('Order is empty')
+        else:
+            print(f'list of dish: {list(map(lambda x: x.get_name,self.get_list_of_dish))}', sep=', ')
+            print(f'total quantity: {self.get_quantity}' + '\n'
+                  f'total mass: {self.get_mass}' + '\n'
+                  f'total price: {self.get_price}' + '\n'
+                  f'total cost: {self.get_cost}')
 
     def append_dish(self, *args: Dish):
         self.__list_of_dishes = [dish for dish in args]
@@ -78,7 +71,7 @@ class Ordering:
             self.__price += dish.get_price * dish.get_quantity
         self.__cost = self.__price
 
-    def pay(self, value):
+    def pay(self, value: float):
         self.__cost -= value
         if self.__cost == 0:
             print('order paid')
