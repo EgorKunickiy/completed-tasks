@@ -1,3 +1,11 @@
+class LenException(Exception):
+    pass
+
+
+class ClassException(Exception):
+    pass
+
+
 class NumberWrapper:
     def __init__(self, *args):
         self.__list_of_number = list(args)
@@ -5,71 +13,109 @@ class NumberWrapper:
     def __len__(self):
         return len(self.__list_of_number)
 
-    def __gt__(self, other: 'NumberWrapper'):
+    def __gt__(self, other):
+        try:
+            if len(self.__list_of_number) != len(other.__list_of_number):
+                raise LenException
+            else:
+                for i, j in zip(self.__list_of_number, other.__list_of_number):
+                    if i < j:
+                        return False
+                return True
+        except LenException:
+            print('Objects have different lengths')
 
-        assert len(self.__list_of_number) == len(other.__list_of_number), 'Objects have different lengths'
-        for i, j in zip(self.__list_of_number, other.__list_of_number):
-            if i < j:
-                return False
-            return True
+    def __lt__(self, other):
+        try:
+            if len(self.__list_of_number) != len(other.__list_of_number):
+                raise LenException
+            else:
+                for i, j in zip(self.__list_of_number, other.__list_of_number):
+                    if i > j:
+                        return False
+                return True
+        except LenException:
+            print('Objects have different lengths')
 
-    def __lt__(self, other: 'NumberWrapper'):
-        assert len(self.__list_of_number) == len(other.__list_of_number), 'Objects have different lengths'
-        for i, j in zip(self.__list_of_number, other.__list_of_number):
-            if i > j:
-                return False
-            return True
-
-    def __eq__(self, other: 'NumberWrapper'):
-        assert len(self.__list_of_number) == len(other.__list_of_number), 'Objects have different lengths'
-        assert isinstance(other, NumberWrapper), 'Objects have different class'
-        for i, j in zip(self.__list_of_number, other.__list_of_number):
-            if i != j:
-                return False
-            return True
+    def __eq__(self, other):
+        try:
+            if len(self.__list_of_number) != len(other.__list_of_number):
+                raise LenException
+            elif not(isinstance(other, NumberWrapper)):
+                raise ClassException
+            else:
+                for i, j in zip(self.__list_of_number, other.__list_of_number):
+                    if i != j:
+                        return False
+                return True
+        except LenException:
+            print('Objects have different lengths')
+        except ClassException:
+            print('Objects have different class')
 
     def __add__(self, other):
-        res = []
-        assert len(self.__list_of_number) == len(other.__list_of_number), 'Objects have different lengths'
-        for i, j in zip(self.__list_of_number, other.__list_of_number):
-            res.append(i + j)
-        return NumberWrapper(*res)
+        try:
+            if len(self.__list_of_number) != len(other.__list_of_number):
+                raise LenException
 
-    def __sub__(self, other: 'NumberWrapper'):
-        res = []
-        assert len(self.__list_of_number) == len(other.__list_of_number), 'Objects have different lengths'
-        for i, j in zip(self.__list_of_number, other.__list_of_number):
-            res.append(i - j)
-        return NumberWrapper(*res)
+            else:
+                res = []
+                for i, j in zip(self.__list_of_number, other.__list_of_number):
+                    res.append(i + j)
+                return NumberWrapper(*res)
+        except LenException:
+            print('Objects have different lengths')
 
-    def __mul__(self, other: 'NumberWrapper'):
-        res = []
-        assert len(self.__list_of_number) == len(other.__list_of_number), 'Objects have different lengths'
-        for i, j in zip(self.__list_of_number, other.__list_of_number):
-            res.append(i * j)
-        return NumberWrapper(*res)
+    def __sub__(self, other):
+        try:
+            if len(self.__list_of_number) != len(other.__list_of_number):
+                raise LenException
+            else:
+                res = []
+                for i, j in zip(self.__list_of_number, other.__list_of_number):
+                    res.append(i - j)
+                return NumberWrapper(*res)
+        except LenException:
+            print('Objects have different lengths')
+
+    def __mul__(self, other):
+        try:
+            if len(self.__list_of_number) != len(other.__list_of_number):
+                raise LenException
+            else:
+                res = []
+                for i, j in zip(self.__list_of_number, other.__list_of_number):
+                    res.append(i * j)
+                return NumberWrapper(*res)
+        except LenException:
+            print('Objects have different lengths')
 
     def __truediv__(self, other):
-        res = []
-        assert len(self.__list_of_number) == len(other.__list_of_number), 'Objects have different lengths'
-        for i, j in zip(self.__list_of_number, other.__list_of_number):
-            res.append(i / j)
-        return NumberWrapper(*res)
+        try:
+            if len(self.__list_of_number) != len(other.__list_of_number):
+                raise LenException
+            else:
+                res = []
+                for i, j in zip(self.__list_of_number, other.__list_of_number):
+                    res.append(i / j)
+                return NumberWrapper(*res)
+        except LenException:
+            print('Objects have different lengths')
 
     def __str__(self):
         return f'NumberWrapper:{self.__list_of_number}'
 
-    def append(self, num: int):
+    def append(self, num):
         self.__list_of_number.append(num)
         return self
 
-    def __getitem__(self, item: int):
+    def __getitem__(self, item):
         return self.__list_of_number[item]
 
-    def __setitem__(self, key: int, value: int):
+    def __setitem__(self, key, value):
         self.__list_of_number[key] = value
 
-    def __delitem__(self, key: int):
+    def __delitem__(self, key):
         del self.__list_of_number[key]
 
 
