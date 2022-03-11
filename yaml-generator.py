@@ -1,6 +1,7 @@
 import sys
 import os
 import yaml
+import json
 
 
 def read_file_yaml(file_name: str) -> dict:
@@ -14,6 +15,12 @@ def writer_file_yaml(data: dict):
         yaml.dump(data, file, default_flow_style=False)
 
 
+def read_file_json(file_name: str) -> dict:
+    with open(file_name, 'r') as file:
+        data_from_file = json.load(file)
+    return data_from_file
+
+
 def set_up_structure(path: str, flag=False) -> dict:
     dict_res = dict()
     if len(os.listdir(path)) == 0:
@@ -23,6 +30,8 @@ def set_up_structure(path: str, flag=False) -> dict:
             if os.path.isdir(path + f'\\{file}'):
                 dict_res[file] = set_up_structure(path + f'\\{file}', True)
             elif file.split('.')[1] == 'yaml':
+                dict_res[file.split('.')[0]] = [read_file_yaml(path + f'\\{file}')]
+            elif file.split('.')[1] == 'json':
                 dict_res[file.split('.')[0]] = [read_file_yaml(path + f'\\{file}')]
             else:
                 dict_res[file.split('.')[0]] = f'{file} file content'
