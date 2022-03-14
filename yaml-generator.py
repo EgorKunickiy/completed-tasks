@@ -4,6 +4,12 @@ import yaml
 import json
 
 
+def read_file(file_name: str):
+    with open(file_name, 'r') as file:
+        data = file.readlines()
+    return data
+
+
 def read_file_yaml(file_name: str) -> dict:
     with open(file_name, 'r') as file:
         data_from_file = yaml.safe_load(file)
@@ -29,12 +35,12 @@ def set_up_structure(path: str, flag=False) -> dict:
         for file in os.listdir(path):
             if os.path.isdir(path + f'\\{file}'):
                 dict_res[file] = set_up_structure(path + f'\\{file}', True)
-            elif file.split('.')[1] == 'yaml':
+            elif file.split('.')[1] in ('yaml', 'yml'):
                 dict_res[file.split('.')[0]] = [read_file_yaml(path + f'\\{file}')]
             elif file.split('.')[1] == 'json':
                 dict_res[file.split('.')[0]] = [read_file_yaml(path + f'\\{file}')]
             else:
-                dict_res[file.split('.')[0]] = f'{file} file content'
+                dict_res[file.split('.')[0]] = f'{read_file(file)} file content'
     if flag:
         return dict_res
     else:
