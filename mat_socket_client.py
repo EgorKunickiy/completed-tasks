@@ -9,7 +9,7 @@ class Client:
 
     @staticmethod
     def __processing_str(args: tuple) -> str:
-        return ', '.join(args[1:])
+        return ' '.join(args[1:])
 
     def send(self, args):
         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
