@@ -1,6 +1,5 @@
 import socket
-import operator
-from mathematical_logic import Logic
+from mathematical_logic import multi_func
 
 
 class ValidationException(Exception):
@@ -21,7 +20,7 @@ class Server:
                 while True:
                     data = conn.recv(1024).decode('UTF-8')
                     print(data)
-                    query = Logic.multi_func(data)
+                    query = multi_func(data)
                     if not data:
                         break
                     conn.sendall(bytes(str(query), encoding="UTF-8"))

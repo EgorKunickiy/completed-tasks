@@ -1,5 +1,5 @@
 from flask import Flask, request
-from mathematical_logic import Logic
+from mathematical_logic import multi_func
 
 app = Flask(__name__)
 
@@ -19,7 +19,7 @@ def index():
 @app.route('/', methods=['POST'])
 def index_post():
     data = request.form.get('data')
-    return Logic.multi_func(data)
+    return multi_func(data)
 
 
 if __name__ == "__main__":
