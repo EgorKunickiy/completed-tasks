@@ -7,12 +7,19 @@ import json
 def structure_check(file_name: str):
     try:
         result = read_file_json(file_name)
-        return result
+        return result, ' as json'
     except json.decoder.JSONDecodeError:
         pass
+
     try:
         result = read_file_yaml(file_name)
-        return result
+        return result, ' as yaml'
+    except:
+        pass
+
+    try:
+        result = read_file(file_name)
+        return result, ' as txt'
     except:
         pass
 
@@ -49,7 +56,8 @@ def set_up_structure(path: str, flag=False) -> dict:
             if os.path.isdir(path + f'\\{file}'):
                 dict_res[file] = set_up_structure(path + f'\\{file}', True)
             else:
-                dict_res[file.split('.')[0]] = [structure_check(path + f'\\{file}')]
+                content, format = structure_check(path + f'\\{file}')
+                dict_res[file + format] = [content]
     if flag:
         return dict_res
     else:
@@ -59,7 +67,6 @@ def set_up_structure(path: str, flag=False) -> dict:
 
 
 if __name__ == "__main__":
-    print(read_file_yaml('validation_rules.yaml'))
     try:
         args = sys.argv
         writer_file_yaml(set_up_structure(args[1]))
