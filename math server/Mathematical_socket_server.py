@@ -1,9 +1,5 @@
 import socket
-from mathematical_logic import multi_func
-
-
-class ValidationException(Exception):
-    pass
+from create_db import fill_db, output
 
 
 class Server:
@@ -19,11 +15,16 @@ class Server:
             with conn:
                 while True:
                     data = conn.recv(1024).decode('UTF-8')
-                    print(data)
-                    query = multi_func(data)
-                    if not data:
-                        break
+                    if data.split()[0] == 'get':
+                        offset, limit = data.split()[1:]
+                        query = output(int(offset), int(limit))
+                        query = '\n'.join(map(str, query))
+                    else:
+                        query = fill_db(data)
+
                     conn.sendall(bytes(str(query), encoding="UTF-8"))
+                    if data:
+                        break
 
 
 if __name__ == "__main__":
