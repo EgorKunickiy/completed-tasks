@@ -1,5 +1,5 @@
 import socket
-from create_db import fill_db, output
+from create_db import processing_to_query
 
 
 class Server:
@@ -15,13 +15,7 @@ class Server:
             with conn:
                 while True:
                     data = conn.recv(1024).decode('UTF-8')
-                    if data.split()[0] == 'get':
-                        offset, limit = data.split()[1:]
-                        query = output(int(offset), int(limit))
-                        query = '\n'.join(map(str, query))
-                    else:
-                        query = fill_db(data)
-
+                    query = processing_to_query(data)
                     conn.sendall(bytes(str(query), encoding="UTF-8"))
                     if data:
                         break

@@ -1,0 +1,5 @@
+user = 'postgres'
+password = 'pass'
+host = 'localhost'
+port = '5432'
+database = 'Math_expression'

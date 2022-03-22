@@ -35,6 +35,15 @@ class MathExpression(Base):
         self.result = result
 
 
+def processing_to_query(data: str):
+    if data.split()[0] == 'get':
+        offset, limit = data.split()[1:]
+        query = output(int(offset), int(limit))
+        return '\n'.join(map(str, query))
+    else:
+        return fill_db(data)
+
+
 def fill_db(data: str) -> str:
     name_operator, num1, num2 = data.split(' ')
     with Session() as session:
