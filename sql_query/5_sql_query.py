@@ -16,13 +16,12 @@ def get_query():
                        "FROM Math_expression "
                        "GROUP BY (operator, number1, number2) "
                        "HAVING COUNT(*) > 1) AS prom)AS prom4 "
-                       "FULL JOIN "
-                       "(SELECT SUM(count) AS sum "
+                       "CROSS JOIN "
+                       "(SELECT sum FROM(SELECT SUM(count) AS sum "
                        "FROM (SELECT COUNT(*) AS count "
                        "FROM Math_expression "
                        "GROUP BY (operator, number1, number2) "
-                       "HAVING COUNT(*) = 1) AS prom2)AS prom3 "
-                       "ON prom3.sum = prom4.sum"
+                       "HAVING COUNT(*) = 1) AS prom2) AS prom3)AS prom5 "
                        )
         row = cursor.fetchone()
 
