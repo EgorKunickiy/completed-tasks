@@ -1,23 +1,6 @@
 import mathematical_logic
-from database_for_server import Base, Session, engine
-from sqlalchemy import Column, Integer, Numeric, Enum
-import enum
-
-
-class MathExpression(Base):
-    __tablename__ = 'math_expression'
-    id = Column(Integer, primary_key=True)
-    operator_ex = Column('operator', Enum(enum.Enum('Operator', mathematical_logic.LIST_OF_OPERATOR),
-                                          name='operators', create_type=False))
-    number1 = Column('number1', Numeric)
-    number2 = Column('number2', Numeric)
-    result = Column('result', Numeric)
-
-    def __init__(self, operator, number1, number2, result):
-        self.operator_ex = operator
-        self.number1 = number1
-        self.number2 = number2
-        self.result = result
+from structure_of_table import MathExpression
+from database_for_server import Session
 
 
 def processing_to_query(data: str):
@@ -26,21 +9,22 @@ def processing_to_query(data: str):
         query = output(int(offset), int(limit))
         return '\n'.join(map(str, query))
     else:
-        return fill_db(data)
+        return get_answer(data)
 
 
-def fill_db(data: str) -> str:
-    name_operator, num1, num2 = data.split(' ')
+def fill_db(name_operator: str, num1: str, num2: str, result: str):
     with Session() as session:
-        result = mathematical_logic.multi_func(data)
-        if result == '':
-            return result
-        else:
-            Base.metadata.create_all(engine)
+        if result != '':
             math_expression = MathExpression(name_operator, float(num1), float(num2), float(result))
             session.add(math_expression)
             session.commit()
-        return result
+
+
+def get_answer(data: str):
+    name_operator, num1, num2 = data.split(' ')
+    result = mathematical_logic.multi_func(data)
+    fill_db(name_operator, num1, num2, result)
+    return result
 
 
 def output(offset, limit):
