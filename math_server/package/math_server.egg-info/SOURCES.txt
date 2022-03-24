@@ -1,0 +1,8 @@
+LICENSE
+README.md
+setup.cfg
+setup.py
+package/math_server.egg-info/PKG-INFO
+package/math_server.egg-info/SOURCES.txt
+package/math_server.egg-info/dependency_links.txt
+package/math_server.egg-info/top_level.txt
