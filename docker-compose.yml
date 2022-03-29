@@ -1,0 +1,28 @@
+version: "3"
+services:
+  http_server:
+    build: docker_dir1/
+    command: python mathematical_http_server.py
+    ports:
+      - "5000:5000"
+
+  socket_server:
+    build: docker_dir2/
+    command: python mathematical_socket_server.py
+    ports:
+      - "5001:5001"
+
+  database:
+    image: postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: pass
+      POSTGRES_DB: Math_expression
+
+  test_business:
+    build: tests/
+    command: python -m unittest tests
+
+  test_integration:
+    build: tests/
+    command: python -m unittest tests

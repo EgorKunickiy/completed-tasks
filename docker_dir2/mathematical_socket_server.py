@@ -5,7 +5,7 @@ from create_db import processing_to_query
 class Server:
     def __init__(self):
         self.__host = '0.0.0.0'
-        self.__port = 5000
+        self.__port = 5001
 
     def processing(self):
         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:

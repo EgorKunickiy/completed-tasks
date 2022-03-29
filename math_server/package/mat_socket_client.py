@@ -16,9 +16,9 @@ class Client:
             s.connect((self.host, self.port))
             s.sendall(bytes(self.__processing_str(args), encoding='UTF-8'))
             data = s.recv(1024).decode('UTF-8')
-            print(data)
+            return data
 
 
 if __name__ == "__main__":
     client = Client()
-    client.send(sys.argv)
+    print(client.send(sys.argv))
