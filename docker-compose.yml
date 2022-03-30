@@ -26,3 +26,6 @@ services:
   test_integration:
     build: tests/
     command: python -m unittest tests
+
+  test_alembic:
+    command: pytest -m 'alembic'
