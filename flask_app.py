@@ -1,34 +1,39 @@
 import flask
 import requests
+import multiprocessing
 
 
 app = flask.Flask(__name__)
 
 
-def get_answer_from_serv(url: str, inter_dict: dict):
+def get_answer_from_serv(url: str) -> str:
     try:
         answer = requests.head(url)
         if answer.status_code == 200:
-            inter_dict[url] = 'ok'
+            return 'ok'
         else:
             answer = requests.get(url)
             if answer.status_code == 200:
-                inter_dict[url] = 'ok'
+                return 'ok'
     except requests.exceptions.ConnectionError:
-        inter_dict[url] = 'no'
+        return 'no connection'
+
+
+def processing_url(urls: list):
+    with multiprocessing.Pool() as pool:
+        res = pool.map(get_answer_from_serv, urls)
+    return dict(zip(urls, res))
 
 
 @app.route('/', methods=['POST', 'GET'])
 def form_example():
     # handle the POST request
     if flask.request.method == 'POST':
-        urls = flask.request.form.get('url')
-        print(urls.split(', '))
-        inter_dict = dict()
-        for i in urls.split(', '):
-            get_answer_from_serv(i, inter_dict)
-        print(inter_dict)
-        return flask.jsonify(inter_dict)
+        # URLs are entered with ", "
+        url = flask.request.form.get('url')
+
+        answers = processing_url(url.split(', '))
+        return flask.jsonify(answers)
 
     return '''
                   <html>
