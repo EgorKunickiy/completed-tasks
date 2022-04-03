@@ -3,7 +3,7 @@ from structure_of_table import MathExpression
 from database_for_server import Session
 
 
-def processing_to_query(data: str):
+def processing_to_query(data: str) -> str:
     if data.split()[0] == 'get':
         offset, limit = data.split()[1:]
         query = output(int(offset), int(limit))
@@ -12,7 +12,7 @@ def processing_to_query(data: str):
         return get_answer(data)
 
 
-def fill_db(name_operator: str, num1: str, num2: str, result: str):
+def fill_db(name_operator: str, num1: str, num2: str, result: str) -> None:
     with Session() as session:
         if result != '':
             math_expression = MathExpression(name_operator, float(num1), float(num2), float(result))
@@ -20,14 +20,14 @@ def fill_db(name_operator: str, num1: str, num2: str, result: str):
             session.commit()
 
 
-def get_answer(data: str):
+def get_answer(data: str) -> str:
     name_operator, num1, num2 = data.split(' ')
     result = mathematical_logic.multi_func(data)
     fill_db(name_operator, num1, num2, result)
     return result
 
 
-def output(offset, limit):
+def output(offset, limit) -> list:
     expression = Session().query(MathExpression).all()
     for i in expression:
         if not offset:
@@ -36,7 +36,3 @@ def output(offset, limit):
                 limit -= 1
         else:
             offset -= 1
-
-
-if __name__ == '__main__':
-    output(5, 5)
