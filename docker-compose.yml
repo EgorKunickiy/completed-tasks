@@ -1,31 +1,42 @@
 version: "3"
 services:
   http_server:
-    build: docker_dir1/
-    command: python mathematical_http_server.py
+    build: ./
+    container_name: http_server
+    command: ./mathematical_http_server.py
+    restart: always
+    environment:
+      pghost: postgres
     ports:
       - "5000:5000"
+    networks:
+      - default
+    depends_on:
+      - postgres
+
 
   socket_server:
-    build: docker_dir2/
-    command: python mathematical_socket_server.py
+    build: ./
+    command: ./mathematical_socket_server.py
+    restart: always
+    environment:
+      pghost: postgres
     ports:
       - "5001:5001"
+    networks:
+      - default
+    depends_on:
+      - postgres
 
-  database:
-    image: postgres
+
+  postgres:
+    image: postgres:latest
+    ports:
+      - "5002:5002"
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: pass
       POSTGRES_DB: Math_expression
 
-  test_business:
-    build: tests/
-    command: python -m unittest tests
-
-  test_integration:
-    build: tests/
-    command: python -m unittest tests
-
-  test_alembic:
-    command: pytest -m 'alembic'
+networks:
+  default:
