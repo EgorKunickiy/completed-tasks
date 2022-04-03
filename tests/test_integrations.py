@@ -19,7 +19,7 @@ class TestLogin(unittest.TestCase):
         result = client.send(('add', '44', '66'))
         assert result == '110.0'
 
-    def test_http(self):
+    def test_2(self):
         response = self.client.post("/", data={})
 
         resp_json = response.data
