@@ -15,6 +15,8 @@ def get_answer_from_serv(url: str) -> str:
             answer = requests.get(url)
             if answer.status_code == 200:
                 return 'ok'
+            else:
+                return 'no connection'
     except requests.exceptions.ConnectionError:
         return 'no connection'
 
