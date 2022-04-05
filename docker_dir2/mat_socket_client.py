@@ -4,8 +4,8 @@ import sys
 
 class Client:
     def __init__(self):
-        self.host = '127.0.0.1'
-        self.port = 65432
+        self.host = '0.0.0.0'
+        self.port = 5001
 
     @staticmethod
     def __processing_str(args: tuple) -> str:

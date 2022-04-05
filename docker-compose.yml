@@ -1,0 +1,42 @@
+version: "3"
+services:
+  http_server:
+    build: ./
+    container_name: http_server
+    command: ./mathematical_http_server.py
+    restart: always
+    environment:
+      pghost: postgres
+    ports:
+      - "5000:5000"
+    networks:
+      - default
+    depends_on:
+      - postgres
+
+
+  socket_server:
+    build: ./
+    command: ./mathematical_socket_server.py
+    restart: always
+    environment:
+      pghost: postgres
+    ports:
+      - "5001:5001"
+    networks:
+      - default
+    depends_on:
+      - postgres
+
+
+  postgres:
+    image: postgres:latest
+    ports:
+      - "5002:5002"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: pass
+      POSTGRES_DB: Math_expression
+
+networks:
+  default:
