@@ -9,11 +9,11 @@ app = flask.Flask(__name__)
 def get_answer_from_serv(url: str) -> str:
     try:
         answer = requests.head(url)
-        if answer.status_code == 200:
+        if answer.status_code != 405:
             return 'ok'
         else:
             answer = requests.get(url)
-            if answer.status_code == 200:
+            if answer.status_code != 405:
                 return 'ok'
             else:
                 return 'no connection'
