@@ -1,5 +1,6 @@
 import socket
 from create_db import processing_to_query
+import concurrent.futures
 
 
 class Server:
@@ -14,9 +15,11 @@ class Server:
             conn, address = s.accept()
             with conn:
                 while True:
+                    pool = concurrent.futures.ProcessPoolExecutor()
+
                     data = conn.recv(1024).decode('UTF-8')
-                    query = processing_to_query(data)
-                    conn.sendall(bytes(str(query), encoding="UTF-8"))
+                    query = pool.submit(processing_to_query, (data, ))
+                    query.add_done_callback(conn.sendall(bytes(str(query.result()), encoding="UTF-8")))
                     if data:
                         break
 

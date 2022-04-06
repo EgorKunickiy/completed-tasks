@@ -18,6 +18,8 @@ LIST_OF_OPERATOR = {
     'truediv': operator.truediv
 }
 
+thread_pool = ThreadPoolExecutor()
+
 
 def multi_func(data: str) -> str:
     try:
@@ -26,8 +28,8 @@ def multi_func(data: str) -> str:
             raise AttributeError
         num1 = float(num1)
         num2 = float(num2)
-        with ThreadPoolExecutor() as executor:
-            result = executor.submit(LIST_OF_OPERATOR[name_operator], num1, num2)
+        with thread_pool:
+            result = thread_pool.submit(LIST_OF_OPERATOR[name_operator], num1, num2)
         # additionally convert to float for Boolean
         return result.result()
     except AttributeError:
