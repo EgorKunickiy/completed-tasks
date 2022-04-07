@@ -44,10 +44,9 @@ def ping():
 
 @app.route('/PostInputData', methods=['POST'])
 def post_input_data():
-
-    json = request.get_json()
-
-    return jsonify(json)
+    jsonr = request.get_json()
+    print(jsonr)
+    return jsonify(jsonr)
 
 
 @app.route('/GetAnswer')
