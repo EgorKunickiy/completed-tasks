@@ -21,4 +21,4 @@ class Client:
 
 if __name__ == "__main__":
     client = Client()
-    print(client.send(sys.argv))
+    print(client.send(('dddd', 'add', '3', '76')))
