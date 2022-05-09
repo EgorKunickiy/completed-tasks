@@ -1,5 +1,6 @@
 from collections import deque, defaultdict
 
+
 def sum_dict(dict1: dict, dict2: dict) -> dict:
     result = defaultdict(int)
     new_dict = defaultdict(int)
@@ -8,6 +9,7 @@ def sum_dict(dict1: dict, dict2: dict) -> dict:
     for i in new_dict.keys():
         result[i] = dict1[i] + dict2[i]
     return result
+
 
 def nesting(molecule: str) -> list:
     parentheses = {'(': ')', '[': ']', '{': '}'}
@@ -25,6 +27,7 @@ def nesting(molecule: str) -> list:
                 if end == 0:
                     end = i
                 return [start, end]
+
 
 def parse_molecule(molecule: str) -> dict:
     result = defaultdict(int)
@@ -85,6 +88,7 @@ def parse_molecule(molecule: str) -> dict:
         atom = ''
 
     return result
+
 
 if __name__ == "__main__":
     print(parse_molecule('H2O'))

@@ -13,6 +13,7 @@ class Student:
     def __repr__(self):
         return f'{self.__name}'
 
+
 class EducationalInstitution:
     def __init__(self, list_st: list):
         self.__list_of_students: list = list_st
@@ -52,6 +53,7 @@ class University(EducationalInstitution):
             return University(self.list_of_students + other.list_of_students)
         else:
             return None
+
 
 def add(obj_1: EducationalInstitution, obj_2: EducationalInstitution):
     res = obj_1.list_of_students + obj_2.list_of_students
