@@ -1,6 +1,10 @@
 from sorting_methods import insertion_sort, selection_sort, heap_sort, quick_sort
 from timeit import default_timer as timer
-from parser import parse
+from database import DataBase
+from config_for_db import NAME, PORT, HOST
+
+db = DataBase(HOST, PORT, NAME)
+
 
 LIST_OF_SORTING = {
     "selection sort": selection_sort,
@@ -13,14 +17,21 @@ LIST_OF_SORTING = {
 def get_sort(data: list, func: str) -> dict:
     final_dict = dict()
     for sequence in data:
-        start = timer()
-        if func == 'fast sort':
-            result = LIST_OF_SORTING[func](sequence.copy(), 0, len(sequence)-1)
-        else:
-            result = LIST_OF_SORTING[func](sequence.copy())
-        end = timer()
-        final_dict[str(result)] = str(end-start)
+        res_search = db.find_el(sequence)
 
+        if res_search is not None:
+            final_dict[str(sequence)] = str(res_search)
+            db.show()
+        else:
+            start = timer()
+            if func == 'fast sort':
+                result = LIST_OF_SORTING[func](sequence.copy(), 0, len(sequence)-1)
+            else:
+                result = LIST_OF_SORTING[func](sequence.copy())
+            end = timer()
+            db.add_el(sequence, end-start)
+            final_dict[str(result)] = str(end-start)
+            db.show()
     return final_dict
 
 

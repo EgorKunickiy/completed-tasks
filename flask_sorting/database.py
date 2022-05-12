@@ -32,7 +32,7 @@ class DataBase:
 
 if __name__ == "__main__":
     db = DataBase(HOST, PORT, NAME)
-    db.add_el([34, 5, 6, 7], 2.56)
+    #db.add_el([34, 5, 6, 7], 2.56)
     db.show()
     t = timer()
     print(db.find_el([34, 5, 6, 7]))
